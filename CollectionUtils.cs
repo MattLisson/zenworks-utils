@@ -160,6 +160,17 @@ namespace Zenworks.Utils {
             }
         }
 
+        public static IEnumerable<T> SkipNulls<T>(this IEnumerable<T?> from) where T : class {
+            if (from == null) {
+                yield break;
+            }
+            foreach (T? u in from) {
+                if (u != null) {
+                    yield return u;
+                }
+            }
+        }
+
         public static IEnumerable<TTo> Map<TFrom, TTo>(this IEnumerable<TFrom>? from, Func<TFrom, TTo> map) {
             if (from == null) {
                 yield break;
