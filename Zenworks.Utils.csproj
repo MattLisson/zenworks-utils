@@ -19,7 +19,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="2.9.1" PrivateAssets="all" />
-    <PackageReference Include="NodaTime" Version="2.4.5" />
+    <PackageReference Include="NodaTime" Version="2.4.7" />
   </ItemGroup>
 
 </Project>
