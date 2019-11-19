@@ -12,7 +12,11 @@ namespace Zenworks.Utils {
         }
 
         public static ZonedDateTime EarlyThisMorning(this ZonedDateTime now) {
-            LocalDateTime earlyMorning = now.LocalDateTime.Date + new LocalTime(3, 0);
+            LocalDateTime localNow = now.LocalDateTime;
+            LocalTime threeAM = new LocalTime(3, 0);
+            LocalDateTime earlyMorning = localNow.TimeOfDay > threeAM
+                ? localNow.Date + threeAM
+                : localNow.Date - Period.FromDays(1) + threeAM;
             return new ZonedDateTime(earlyMorning, now.Zone, now.Offset);
         }
 
