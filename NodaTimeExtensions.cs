@@ -22,10 +22,15 @@ namespace Zenworks.Utils {
 
         public static Duration TimeUntilTomorrow(this ZonedClock clock) {
             ZonedDateTime zonedNow = clock.GetCurrentZonedDateTime();
-            LocalDateTime thisTimeTomorrow = zonedNow.LocalDateTime.PlusDays(1);
-            LocalDateTime earlyTomorrow = thisTimeTomorrow.Date + new LocalTime(3, 0);
-            ZonedDateTime zonedEarlyTomorrow = zonedNow.Zone.AtLeniently(earlyTomorrow);
-            return zonedEarlyTomorrow - zonedNow;
+            LocalDate date = zonedNow.Date;
+            LocalTime time = zonedNow.TimeOfDay;
+            LocalTime threeAM = new LocalTime(03, 00);
+            if (time > threeAM) {
+                date = date.PlusDays(1);
+            }
+            LocalDateTime next3AM = date + threeAM;
+            ZonedDateTime zonedNext3AM = zonedNow.Zone.AtLeniently(next3AM);
+            return zonedNext3AM - zonedNow;
         }
 
         public static bool Overlaps(this Interval self, Interval other) {
