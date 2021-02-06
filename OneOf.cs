@@ -50,7 +50,7 @@ namespace Zenworks.Utils {
 
         private OneOf(int index, T0 value0 = default) {
             _index = index;
-            _value0 = value0;
+            _value0 = value0!;
         }
 
         public object? Value {
@@ -158,8 +158,8 @@ namespace Zenworks.Utils {
 
         private OneOf(int index, T0 value0 = default, T1 value1 = default) {
             _index = index;
-            _value0 = value0;
-            _value1 = value1;
+            _value0 = value0!;
+            _value1 = value1!;
         }
 
         public object? Value {
@@ -330,9 +330,9 @@ namespace Zenworks.Utils {
 
         private OneOf(int index, T0 value0 = default, T1 value1 = default, T2 value2 = default) {
             _index = index;
-            _value0 = value0;
-            _value1 = value1;
-            _value2 = value2;
+            _value0 = value0!;
+            _value1 = value1!;
+            _value2 = value2!;
         }
 
         public OneOf(T0 value) : this(0, value0: value) { }
