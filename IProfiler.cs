@@ -28,7 +28,7 @@ namespace Zenworks.Utils {
             return $"{Timestamp.ToString("HH:mm:ss:fff", null)}{":".PadRight(Indent * 4)}{Name}";
         }
         #region Equality
-        public override bool Equals(object obj) {
+        public override bool Equals(object? obj) {
             return obj is Sample sample && Equals(sample);
         }
 

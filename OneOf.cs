@@ -12,7 +12,7 @@ namespace Zenworks.Utils {
             Message = message;
         }
 
-        public override bool Equals(object obj) {
+        public override bool Equals(object? obj) {
             return obj is Failure error && Equals(error);
         }
 
@@ -48,9 +48,9 @@ namespace Zenworks.Utils {
         private readonly T0 _value0;
         private readonly int _index;
 
-        private OneOf(int index, T0 value0 = default) {
+        private OneOf(int index, T0 value0 = default!) {
             _index = index;
-            _value0 = value0!;
+            _value0 = value0;
         }
 
         public object? Value {
@@ -119,7 +119,7 @@ namespace Zenworks.Utils {
             }
         }
 
-        public override bool Equals(object obj) {
+        public override bool Equals(object? obj) {
             if (obj is null) {
                 return false;
             }
@@ -156,7 +156,7 @@ namespace Zenworks.Utils {
         private readonly T1 _value1;
         private readonly int _index;
 
-        private OneOf(int index, T0 value0 = default, T1 value1 = default) {
+        private OneOf(int index, T0 value0 = default!, T1 value1 = default!) {
             _index = index;
             _value0 = value0!;
             _value1 = value1!;
@@ -287,7 +287,7 @@ namespace Zenworks.Utils {
             }
         }
 
-        public override bool Equals(object obj) {
+        public override bool Equals(object? obj) {
             if (obj is null) {
                 return false;
             }
@@ -328,7 +328,7 @@ namespace Zenworks.Utils {
         private readonly T2 _value2;
         private readonly int _index;
 
-        private OneOf(int index, T0 value0 = default, T1 value1 = default, T2 value2 = default) {
+        private OneOf(int index, T0 value0 = default!, T1 value1 = default!, T2 value2 = default!) {
             _index = index;
             _value0 = value0!;
             _value1 = value1!;
@@ -522,7 +522,7 @@ namespace Zenworks.Utils {
             }
         }
 
-        public override bool Equals(object obj) {
+        public override bool Equals(object? obj) {
             if (obj is null) {
                 return false;
             }

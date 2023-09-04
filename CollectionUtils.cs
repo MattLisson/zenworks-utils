@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Zenworks.Utils {
     public static class CollectionUtils {
@@ -50,9 +51,13 @@ namespace Zenworks.Utils {
             return true;
         }
 
-        public static void EditToMatch<T>(this IEnumerable<T>? a, IEnumerable<T>? b, Action<T> add, Action<T> remove) {
-            HashSet<T> toAdd = b != null ? new HashSet<T>(b) : new HashSet<T>();
-            HashSet<T> toRemove = a != null ? new HashSet<T>(a) : new HashSet<T>();
+        public static void EditToMatch<T>(this IEnumerable<T>? a, IEnumerable<T>? b, Action<T> add, Action<T> remove)
+        {
+            if (a == null || b == null)
+                return;
+
+            HashSet<T> toAdd = new HashSet<T>(b);
+            HashSet<T> toRemove = new HashSet<T>(a);
             toAdd.ExceptWith(a);
             toRemove.ExceptWith(b);
             foreach(T t in toAdd) {
@@ -180,20 +185,6 @@ namespace Zenworks.Utils {
             }
         }
 
-        public static List<T> ToList<T>(this IEnumerable<T> from) {
-            return new List<T>(from);
-        }
-
-        public static IEnumerable<T> Take<T>(this IEnumerable<T> from, int count) {
-            foreach (T t in from) {
-                if (count == 0) {
-                    yield break;
-                }
-                count--;
-                yield return t;
-            }
-        }
-
         public static IEnumerable<T> Skip<T>(this IEnumerable<T> from, uint count) {
             foreach (T t in from) {
                 if (count != 0) {
@@ -224,20 +215,6 @@ namespace Zenworks.Utils {
             return OrderWith(from.ToList(), comparison);
         }
 
-        public static List<T> OrderBy<T, TSortKey>(this List<T> from, Func<T, TSortKey> orderKeyFunc)
-            where TSortKey : IComparable<TSortKey> {
-            from.Sort((first, second) => orderKeyFunc(first).CompareTo(orderKeyFunc(second)));
-            return from;
-        }
-
-        public static List<T> OrderBy<T, TSortKey>(this IEnumerable<T> from, Func<T, TSortKey> orderKeyFunc)
-            where TSortKey : IComparable<TSortKey> {
-            if (from is List<T> list) {
-                return OrderBy(list, orderKeyFunc);
-            }
-            return OrderBy(from.ToList(), orderKeyFunc);
-        }
-
         public static List<T> ToSortedList<T>(this List<T> from) where T : IComparable<T> {
             from.Sort();
             return from;
@@ -249,12 +226,8 @@ namespace Zenworks.Utils {
             return ToSortedList(from.ToList());
         }
 
-        public static T[] ToArray<T>(this IEnumerable<T> from) {
-            return from.ToList().ToArray();
-        }
-
         public static Dictionary<TKey, TValue> ToDict<TKey, TValue>(this IEnumerable<TValue> from,
-            Func<TValue, TKey> keyFunc) {
+            Func<TValue, TKey> keyFunc) where TKey : notnull {
             Dictionary<TKey, TValue> result = new Dictionary<TKey, TValue>();
             foreach (TValue value in from) {
                 result[keyFunc(value)] = value;
@@ -263,30 +236,12 @@ namespace Zenworks.Utils {
         }
 
         public static Dictionary<TKey, TValue2> MapValues<TKey, TValue, TValue2>(this IEnumerable<KeyValuePair<TKey, TValue>> from,
-            Func<TValue, TValue2> valueFunc) {
+            Func<TValue, TValue2> valueFunc) where TKey : notnull {
             Dictionary<TKey, TValue2> result = new Dictionary<TKey, TValue2>();
             foreach (KeyValuePair<TKey, TValue> keyValue in from) {
                 result[keyValue.Key] = valueFunc(keyValue.Value);
             }
             return result;
-        }
-
-        public static bool All<T>(this IEnumerable<T> things, Func<T, bool> predicate) {
-            foreach (T thing in things) {
-                if (!predicate(thing)) {
-                    return false;
-                }
-            }
-            return true;
-        }
-
-        public static bool Any<T>(this IEnumerable<T> things, Func<T, bool> predicate) {
-            foreach (T thing in things) {
-                if (predicate(thing)) {
-                    return true;
-                }
-            }
-            return false;
         }
     }
 }

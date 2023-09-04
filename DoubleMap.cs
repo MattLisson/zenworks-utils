@@ -2,7 +2,9 @@
 
 namespace Zenworks.Utils {
 
-    public class DoubleMap<TKey, TValue> {
+    public class DoubleMap<TKey, TValue>
+        where TKey : notnull
+        where TValue : notnull {
         private readonly Dictionary<TKey, TValue> forward = new Dictionary<TKey, TValue>();
         private readonly Dictionary<TValue, TKey> backward = new Dictionary<TValue, TKey>();
         private readonly object syncLock = new object();

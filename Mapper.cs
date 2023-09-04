@@ -36,10 +36,10 @@ namespace Zenworks.Utils {
         public OneOf<
             MapFunc<TFrom, TTo>,
             MapFuncWithMapper<TFrom, TTo>> GetMapping<TFrom, TTo>() {
-            if (!mappersFromTo.TryGetValue(typeof(TFrom), out Dictionary<Type, object> toMappings)) {
+            if (!mappersFromTo.TryGetValue(typeof(TFrom), out Dictionary<Type, object>? toMappings)) {
                 throw new ArgumentOutOfRangeException($"No mapping from {typeof(TFrom)} to anything.");
             }
-            if (!toMappings.TryGetValue(typeof(TTo), out object mapperFunc)) {
+            if (!toMappings.TryGetValue(typeof(TTo), out object? mapperFunc)) {
                 throw new ArgumentOutOfRangeException($"No mapping from {typeof(TFrom)} to {typeof(TTo)}.");
             }
             if (mapperFunc is OneOf<MapFunc<TFrom, TTo>,
@@ -82,10 +82,10 @@ namespace Zenworks.Utils {
             MapFunc<TFrom, TTo>,
             MapFuncWithContext<TFrom, TTo>,
             MapFuncWithMapper<TFrom, TTo>> GetMapping<TFrom, TTo>() {
-            if (!mappersFromTo.TryGetValue(typeof(TFrom), out Dictionary<Type, object> toMappings)) {
+            if (!mappersFromTo.TryGetValue(typeof(TFrom), out Dictionary<Type, object>? toMappings)) {
                 throw new ArgumentOutOfRangeException($"No mapping from {typeof(TFrom)} to anything.");
             }
-            if (!toMappings.TryGetValue(typeof(TTo), out object mapperFunc)) {
+            if (!toMappings.TryGetValue(typeof(TTo), out object? mapperFunc)) {
                 throw new ArgumentOutOfRangeException($"No mapping from {typeof(TFrom)} to {typeof(TTo)}.");
             }
             if (mapperFunc is OneOf<MapFunc<TFrom, TTo>,
